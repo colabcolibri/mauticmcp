@@ -1,0 +1,16 @@
+export const LIMITS = {
+  searchDefault: 10,
+  searchMax: 25,
+  activityMax: 50,
+  htmlMax: 20_000,
+  plainTextMax: 1_000,
+  noteMax: 5_000,
+  responseMax: 24_000,
+  timeoutMs: 10_000,
+  extraMaxChars: 20_000,
+  eventsMax: 40,
+  idsMax: 50,
+  tokenCount: 20,
+  tokenKeyMax: 80,
+  tokenValueMax: 2_000,
+} as const;

@@ -1,0 +1,63 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Meridian planning export",
+  "type": "object",
+  "required": ["packageRoot", "userStories", "versions", "epics", "sprints"],
+  "additionalProperties": true,
+  "properties": {
+    "packageRoot": { "type": "string", "minLength": 1 },
+    "userStories": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "id",
+          "title",
+          "epic",
+          "version",
+          "status",
+          "moscow",
+          "dependsOn",
+          "ready"
+        ],
+        "properties": {
+          "id": { "type": "string", "pattern": "^US-" },
+          "dependsOn": { "type": "array", "items": { "type": "string" } },
+          "ready": { "type": "boolean" }
+        }
+      }
+    },
+    "versions": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "title", "status"],
+        "properties": {
+          "id": { "type": "string" }
+        }
+      }
+    },
+    "epics": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "title", "status", "versions"],
+        "properties": {
+          "id": { "type": "string", "pattern": "^EPIC-" },
+          "versions": { "type": "array", "items": { "type": "string" } }
+        }
+      }
+    },
+    "sprints": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "version", "title", "status", "stories"],
+        "properties": {
+          "id": { "type": "string" },
+          "stories": { "type": "array", "items": { "type": "string" } }
+        }
+      }
+    }
+  }
+}

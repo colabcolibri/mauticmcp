@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Meridian board</title>
+  <link rel="stylesheet" href="css/tokens.css?v=5" />
+  <link rel="stylesheet" href="css/layout.css?v=5" />
+  <link rel="stylesheet" href="css/board.css?v=5" />
+  <link rel="stylesheet" href="css/sheets.css?v=5" />
+  <link rel="stylesheet" href="css/markdown.css?v=5" />
+</head>
+<body>
+  <div id="app">
+    <header id="app-header">
+      <div class="brand">
+        <h1>Meridian</h1>
+        <span class="brand-sub">monitor</span>
+      </div>
+      <nav id="app-nav" aria-label="Vistas">
+        <button type="button" data-view="board" aria-current="page">Board</button>
+        <button type="button" data-view="versions">Versões</button>
+        <button type="button" data-view="sprints">Sprints</button>
+        <button type="button" data-view="epics">Épicos</button>
+        <button type="button" data-view="decisions">Decisões</button>
+        <button type="button" data-view="docs">Docs</button>
+      </nav>
+      <div id="header-actions">
+        <button type="button" class="chip" id="open-filters" aria-expanded="false">Filtros</button>
+        <span class="filter-summary" id="filter-summary"></span>
+        <button type="button" class="chip board-only" id="toggle-frozen" aria-pressed="false">🧊 Frozen</button>
+        <button type="button" class="chip board-only" id="toggle-deprecated" aria-pressed="false">🚫 Deprecated</button>
+        <button type="button" class="chip board-only" id="toggle-narrative" aria-pressed="false" title="As / I want / so that nos cards">Narrativa</button>
+        <span id="live-chip" class="is-off">offline</span>
+      </div>
+      <div id="app-banner" role="status"></div>
+    </header>
+    <div id="app-body">
+      <main id="view-root"></main>
+    </div>
+  </div>
+
+  <div id="filter-sheet" class="overlay-sheet filter-sheet" hidden aria-hidden="true">
+    <div class="overlay-backdrop" id="filter-sheet-backdrop"></div>
+    <div class="overlay-panel" role="dialog" aria-labelledby="filter-sheet-title">
+      <div class="overlay-header">
+        <h2 id="filter-sheet-title">Filtros</h2>
+        <div class="overlay-header-actions">
+          <button type="button" class="chip" id="reset-filters">Resetar</button>
+          <button type="button" class="chip" id="close-filters">Fechar</button>
+        </div>
+      </div>
+      <div class="filter-sheet-cols">
+        <div class="filter-col" data-filter="version">
+          <div class="filter-col-head">Versão</div>
+          <div class="filter-col-actions">
+            <button type="button" class="chip" id="version-all">Todas</button>
+            <button type="button" class="chip" id="version-none">Nenhuma</button>
+          </div>
+          <div id="version-list" class="filter-list"></div>
+        </div>
+        <div class="filter-col" data-filter="sprint">
+          <div class="filter-col-head">Sprint</div>
+          <div class="filter-col-actions">
+            <button type="button" class="chip" id="sprint-all">Todas</button>
+            <button type="button" class="chip" id="sprint-none">Nenhuma</button>
+          </div>
+          <div id="sprint-list" class="filter-list"></div>
+        </div>
+        <div class="filter-col" data-filter="epic">
+          <div class="filter-col-head">Épico</div>
+          <div class="filter-col-actions">
+            <button type="button" class="chip" id="epic-all">Todos</button>
+            <button type="button" class="chip" id="epic-none">Nenhum</button>
+          </div>
+          <div id="epic-list" class="filter-list"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="detail-sheet" class="overlay-sheet detail-sheet" hidden aria-hidden="true">
+    <div class="overlay-backdrop" id="detail-sheet-backdrop"></div>
+    <div class="overlay-panel" role="dialog" aria-labelledby="detail-sheet-title">
+      <div class="overlay-header">
+        <h2 id="detail-sheet-title">Detalhe</h2>
+        <div class="overlay-header-actions">
+          <button type="button" class="chip" id="close-detail">Fechar</button>
+        </div>
+      </div>
+      <div class="sheet-body" id="detail-body"></div>
+    </div>
+  </div>
+
+  <script src="vendor/marked.min.js"></script>
+  <script src="vendor/purify.min.js"></script>
+  <script src="vendor/mermaid.min.js"></script>
+  <script type="module" src="js/app.js?v=5"></script>
+</body>
+</html>

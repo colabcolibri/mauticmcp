@@ -1,0 +1,13 @@
+# Meridian IDE adapters (local symlinks)
+.cursor/
+.claude/
+.agents/skills/
+.codex/
+.opencode/
+AGENTS.md
+
+node_modules/
+dist/
+.env
+*.tsbuildinfo
+package-lock.json

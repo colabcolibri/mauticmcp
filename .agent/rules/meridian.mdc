@@ -1,0 +1,54 @@
+---
+description: Meridian protocol — docs before code, human manager, agent routing via .agent and .cursor
+alwaysApply: true
+---
+
+# Meridian (Cursor)
+
+This workspace uses the Meridian protocol. The canonical kit source is `.agent/`; Cursor reads this rule and mirrors under `.cursor/`.
+
+## Required reading
+
+1. `.agent/MERIDIAN.md` — master protocol
+2. `.agent/rules/MERIDIAN.md` — P0 rules (equivalent to this rule)
+3. Agent in `.cursor/agents/` or `.agent/agents/` per the request
+4. Skills listed in the agent frontmatter → `.cursor/skills/{name}/SKILL.md`
+5. Creating/closing epic, version, sprint, or US → `.agent/references/templates/INDEX.md` + full template + `section-contracts.md` **before** Write
+
+Priority: **P0 rules > P1 agent + MERIDIAN.md > P2 skills**.
+
+## Short rules
+
+- Phase docs: `docs/` of the **active Meridian product** (monorepos: `.meridian/projects.json`).
+- Delivery backlog: `.meridian/meridian.db` (epics, versions, sprints, US, decisions).
+- Inspect delivery via `meridian_delivery.py` (`show`/`list`/`counts`) — prefer CLI over raw SQL.
+- **Frontmatter ≠ SQL columns:** `epic`→`epic_id`, `version`→`version_id`, `sprint`→`sprint_id`. Never `SELECT sprint, version FROM user_stories`.
+- **Forbidden:** `.meridian/drafts/`, `us-*-refine.md`, `us-*-complete.md`, `docs/us/*.md` — US “draft” = `ready: false` in SQLite; persist via `update-*` (stdin heredoc only).
+- Board UI: `meridian_db_export --format planning`; `board_snapshots` on every upsert.
+- Documentation precedes product code.
+- Do not create US before `05_architecture` `approved`.
+- Never `✅` without evidence; never `🔶` without `Missing:` in acceptance.
+- Never `✅` without filled `## Record` on the US (skill `us-complete`).
+- Product code for a US requires `ready: true` — load skill `us-implement` or `@developer` before coding.
+- Decisions: `prepend-decision` CLI — run `date +"%Y-%m-%d"` and `date +"%H:%M"` first (skill `update-decisions-log`).
+- Structural contract: `.agent/references/templates/section-contracts.md`.
+- Routing: skill `meridian-routing` or specialized agents.
+- Announce: `🤖 Applying knowledge from @[agent-name]...` before specialized work.
+
+## Invoke (chat)
+
+| Entry | Example | Canonical path |
+| ----- | ------- | -------------- |
+| **Skill** | `/us-create`, `/data-engineering`, `/project-status` | `.agent/skills/{name}/SKILL.md` |
+| **Agent** | `@story-maker`, `@data-engineer`, `@scrum-master` | `.agent/agents/{slug}/agent.md` |
+
+No `.agent/workflows/` — procedures are **skills only**. Catalog: `.agent/references/guides/agents-help.md`
+
+Maintainer map: `.agent/references/protocol/instruction-surfaces.md`
+
+## Validate project
+
+```bash
+python3 .agent/scripts/validate_meridian.py <project-folder>
+python3 .agent/scripts/validate_meridian.py <project-folder> --sqlite-only --strict-kit-md
+```
