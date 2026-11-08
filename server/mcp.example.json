@@ -1,0 +1,11 @@
+{
+  "mcpServers": {
+    "mautic": {
+      "command": "node",
+      "args": [
+        "--env-file=/absolute/path/mautic-mcp/server/.env",
+        "/absolute/path/mautic-mcp/server/dist/index.js"
+      ]
+    }
+  }
+}

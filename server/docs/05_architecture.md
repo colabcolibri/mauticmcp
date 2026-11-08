@@ -21,14 +21,14 @@ Out of this server: its own database, a UI, the projects API v2, file upload, ca
 
 ```mermaid
 flowchart LR
-  cursor[Cursor]
+  host[Agent host]
   mcp[mautic-mcp stdio]
   mautic[Mautic API v1]
-  cursor --> mcp
+  host --> mcp
   mcp --> mautic
 ```
 
-The process starts in Cursor, reads credentials only from the environment and calls `https` (or `http` on localhost). It does not open a port.
+The agent host starts the process, which reads credentials only from the environment and calls `https` (or `http` on localhost). It does not open a port.
 
 **Repository layout (high level):**
 
@@ -69,7 +69,7 @@ A tool does not build a free-form URL. `src/mautic/paths.ts` is the only route l
 
 | System | Direction | Protocol | Auth | Failure mode |
 | ------ | --------- | -------- | ---- | ------------ |
-| Cursor | inbound | MCP stdio | local process | tool absent when policy disables it |
+| Agent host | inbound | MCP stdio | local process | tool absent when policy disables it |
 | Mautic API v1 | outbound | HTTPS JSON | Basic or OAuth2 `client_credentials` | 10s timeout; one retry on GET 429/503; POST is not retried; 401 refreshes the token once |
 
 `MAUTIC_BASE_URL` is the site origin, with or without a trailing `/api`. `http` is allowed only on `localhost` or `127.0.0.1`.
@@ -78,7 +78,7 @@ A tool does not build a free-form URL. `src/mautic/paths.ts` is the only route l
 
 ### Flow 1 — read
 
-1. Cursor calls `mautic_search` or `mautic_get`.
+1. The agent calls `mautic_search` or `mautic_get`.
 2. The client builds Basic auth or fetches a token, calls the catalog path and summarizes the entity.
 3. Search returns at most 25 items, without `customHtml`. Getting a report executes it and returns at most 25 rows.
 

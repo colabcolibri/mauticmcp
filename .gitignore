@@ -6,6 +6,9 @@
 .opencode/
 AGENTS.md
 
+# Operação Colibri (cópias, contatos, rascunhos) — não versionar
+gestao-mautic-colibri/
+
 node_modules/
 dist/
 .env
