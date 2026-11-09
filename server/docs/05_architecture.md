@@ -2,7 +2,7 @@
 title: Architecture
 status: draft
 version: 1.0
-updated: 2026-11-08
+updated: 2026-11-09
 depends_on: []
 blocks: []
 ---
@@ -28,7 +28,7 @@ flowchart LR
   mcp --> mautic
 ```
 
-The agent host starts the process, which reads credentials only from the environment and calls `https` (or `http` on localhost). It does not open a port.
+The agent host starts the MCP process, which reads credentials only from the environment and calls `https` (or `http` on localhost). It does not open a port.
 
 **Repository layout (high level):**
 
